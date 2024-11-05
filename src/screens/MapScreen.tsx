@@ -1,9 +1,13 @@
 import { useDispatch } from "react-redux";
 import { AppScreen, setScreen } from "../redux/mainSlice";
+import { useState } from "react";
 
 // This screen shows the map
 export const MapScreen = () => {
     const dispatch = useDispatch();
+
+    // Is there currently a route in progress?
+    const [hasRoute, setHasRoute] = useState(true);
 
     return (
         <div className="screen map-screen">
@@ -18,17 +22,17 @@ export const MapScreen = () => {
                 <img className="search-icon" src="./search.svg" alt="Search"></img>
             </div>
 
-            <div className="next-direction-bar">
-                <img src="./leftarrow.svg" alt="Left Arrow"></img>
+            {hasRoute ? (
+                <div className="next-direction-bar">
+                    <img src="./leftarrow.svg" alt="Left Arrow"></img>
 
-                <div className="next-direction">
-                    200 ft at Landrum Dr
-                </div>
+                    <div className="next-direction">200 ft at Landrum Dr</div>
 
-                <div className="exit-route-button">
-                    Exit
+                    <div className="exit-route-button" onClick={() => setHasRoute(false)}>Exit</div>
                 </div>
-            </div>
+            ) : (
+                <span style={{ height: "60px" }}></span>
+            )}
         </div>
     );
 };
