@@ -1,13 +1,27 @@
 import classNames from "classnames";
 import { useState } from "react";
-import { useDispatch } from "react-redux";
-import { AppScreen, popPosition, setScreen } from "../redux/mainSlice";
+import { useDispatch, useSelector } from "react-redux";
+import {
+    AppScreen,
+    popPosition,
+    selectActivePos,
+    setScreen,
+    updateActivePosReason
+} from "../redux/mainSlice";
 
 // Page for reporting blockages
 export const ReportBlockageScreen = () => {
     const dispatch = useDispatch();
 
-    const [theReason, setTheReason] = useState("Construction");
+    const activePos = useSelector(selectActivePos)!;
+
+    const [theReason, setTheReason] = useState(activePos.reason);
+    const [otherReason, setOtherReason] = useState(
+        activePos.reason === "Construction" || activePos.reason === "Flooding"
+            ? ""
+            : activePos.reason
+    );
+    const [reasonText, setReasonText] = useState("Construction");
 
     return (
         <div className="screen report-blockage-screen">
@@ -22,7 +36,15 @@ export const ReportBlockageScreen = () => {
                             "report-blockage-select",
                             reason === theReason ? "report-blockage-select-active" : ""
                         )}
-                        onClick={() => setTheReason(reason)}
+                        onClick={() => {
+                            setTheReason(reason);
+
+                            if (reason === "Other") {
+                                setReasonText(otherReason);
+                            } else {
+                                setReasonText(reason);
+                            }
+                        }}
                         key={reason}
                     >
                         {reason}
@@ -32,12 +54,23 @@ export const ReportBlockageScreen = () => {
                 <input
                     className="report-blockage-other"
                     placeholder="Enter Other Reason"
+                    value={otherReason}
+                    onChange={(event) => {
+                        setOtherReason(event.target.value);
+
+                        if (theReason === "Other") {
+                            setReasonText(event.target.value);
+                        }
+                    }}
                 ></input>
 
                 <div className="report-blockage-buttons">
                     <button
                         className="report-blockage-submit"
-                        onClick={() => dispatch(setScreen(AppScreen.Map))}
+                        onClick={() => {
+                            dispatch(updateActivePosReason(reasonText));
+                            dispatch(setScreen(AppScreen.Map));
+                        }}
                     >
                         Confirm
                     </button>

@@ -8,12 +8,19 @@ export enum AppScreen {
     ReportBlockage
 }
 
+export type Position = {
+    x: number;
+    y: number;
+    reason: string;
+    id: string;
+};
+
 export type AppState = {
     screen: AppScreen; // Current screen
     activeRoute: boolean; // Is there an active route?
     isReporting: boolean; // Is the user reporting a path?
-    positions: number[][]; // List of points of blockages
-    activePos: number[]; // Active position
+    positions: Position[]; // List of points of blockages
+    activePos: Position | null; // Active position
 };
 
 const initialState: AppState = {
@@ -21,7 +28,7 @@ const initialState: AppState = {
     activeRoute: true,
     isReporting: false,
     positions: [],
-    activePos: []
+    activePos: null
 };
 
 export const mainSlice = createSlice({
@@ -40,7 +47,7 @@ export const mainSlice = createSlice({
             state.isReporting = action.payload;
         },
 
-        addPosition(state: AppState, action: PayloadAction<number[]>) {
+        addPosition(state: AppState, action: PayloadAction<Position>) {
             state.positions.push(action.payload);
         },
 
@@ -48,23 +55,41 @@ export const mainSlice = createSlice({
             state.positions.pop();
         },
 
-        setActivePos(state: AppState, action: PayloadAction<number[]>) {
+        setActivePos(state: AppState, action: PayloadAction<Position>) {
             state.activePos = action.payload;
         },
 
         removeActivePos(state: AppState) {
-            if (state.activePos.length === 2) {
+            if (state.activePos !== null) {
                 state.positions = state.positions.filter(
-                    (pos) =>
-                        pos[0] !== state.activePos[0] || pos[1] !== state.activePos[1]
+                    (pos) => pos.id !== state.activePos!.id
+                );
+            }
+        },
+
+        // Updates the reason for the active pos
+        updateActivePosReason(state: AppState, action: PayloadAction<string>) {
+            if (state.activePos !== null) {
+                state.positions = state.positions.map((pos) =>
+                    pos.id === state.activePos!.id
+                        ? { ...pos, reason: action.payload }
+                        : pos
                 );
             }
         }
     }
 });
 
-export const { addPosition, popPosition, removeActivePos, setActivePos, setActiveRoute, setIsReporting, setScreen } =
-    mainSlice.actions;
+export const {
+    addPosition,
+    popPosition,
+    removeActivePos,
+    setActivePos,
+    setActiveRoute,
+    setIsReporting,
+    setScreen,
+    updateActivePosReason
+} = mainSlice.actions;
 
 export default mainSlice.reducer;
 
@@ -78,4 +103,7 @@ export const selectActiveRoute = (state: AppState): boolean => state.activeRoute
 export const selectIsReporting = (state: AppState): boolean => state.isReporting;
 
 // Selects the list of positions
-export const selectPositions = (state: AppState): number[][] => state.positions;
+export const selectPositions = (state: AppState): Position[] => state.positions;
+
+// Selects the active position
+export const selectActivePos = (state: AppState): Position => state.activePos!;

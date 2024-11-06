@@ -1,8 +1,9 @@
+import classNames from "classnames";
+import { useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
     addPosition,
     AppScreen,
-    popPosition,
     selectActiveRoute,
     selectIsReporting,
     selectPositions,
@@ -11,8 +12,7 @@ import {
     setIsReporting,
     setScreen
 } from "../redux/mainSlice";
-import classNames from "classnames";
-import { useEffect, useRef } from "react";
+import { nanoid } from "nanoid";
 
 // This screen shows the map
 export const MapScreen = () => {
@@ -36,7 +36,15 @@ export const MapScreen = () => {
 
                 // Magic numbers are for the position of the report button
                 if (x >= 0 && y >= 0 && (x <= 320 || y <= 400)) {
-                    dispatch(addPosition([x, y]));
+                    const newPos = {
+                        x,
+                        y,
+                        reason: "Construction",
+                        id: nanoid()
+                    };
+
+                    dispatch(addPosition(newPos));
+                    dispatch(setActivePos(newPos));
                     dispatch(setIsReporting(false));
                     dispatch(setScreen(AppScreen.ReportBlockage));
                 }
@@ -62,7 +70,7 @@ export const MapScreen = () => {
                     className="map-destination-input"
                     onClick={() => dispatch(setScreen(AppScreen.SelectDestination))}
                 >
-                    towards Destination
+                    {activeRoute ? "towards Destination" : "Select Destination"}
                 </div>
                 <img className="search-icon" src="./search.svg" alt="Search"></img>
             </div>
@@ -116,7 +124,7 @@ export const MapScreen = () => {
                         }}
                         key={idx}
                         src="./cone.png"
-                        style={{ position: "relative", top: pos[1], left: pos[0] }}
+                        style={{ position: "relative", top: pos.y, left: pos.x }}
                         alt="traffic cone"
                     ></img>
                 ))}

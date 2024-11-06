@@ -1,15 +1,26 @@
-import { useDispatch } from "react-redux";
-import { AppScreen, removeActivePos, setScreen } from "../redux/mainSlice";
+import { useDispatch, useSelector } from "react-redux";
+import {
+    AppScreen,
+    removeActivePos,
+    selectActivePos,
+    setScreen,
+    updateActivePosReason
+} from "../redux/mainSlice";
+import { useState } from "react";
 
 // Screen for viewing a blockage
 export const ViewBlockageScreen = () => {
     const dispatch = useDispatch();
 
+    const pos = useSelector(selectActivePos)!;
+
+    const [newReason, setNewReason] = useState(pos.reason);
+
     return (
         <div className="screen view-blockage-screen">
-            <div className="report-blockage">
+            <div className="view-blockage">
                 <div className="view-blockage-title">
-                    Path blocked due to construction (ETA: Fall 2025)
+                    Path blocked due to {pos.reason.toLowerCase()}
                 </div>
 
                 <div className="view-blockage-reason">
@@ -19,6 +30,8 @@ export const ViewBlockageScreen = () => {
                 <input
                     className="view-blockage-change-reason"
                     placeholder="New Reason"
+                    value={newReason}
+                    onChange={(event) => setNewReason(event.target.value)}
                 ></input>
 
                 <div
@@ -31,7 +44,10 @@ export const ViewBlockageScreen = () => {
                 <div className="view-blockage-buttons">
                     <button
                         className="report-blockage-submit view-blockage-button"
-                        onClick={() => dispatch(setScreen(AppScreen.Map))}
+                        onClick={() => {
+                            dispatch(updateActivePosReason(newReason));
+                            dispatch(setScreen(AppScreen.Map));
+                        }}
                     >
                         Yes
                     </button>
