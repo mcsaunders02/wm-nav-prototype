@@ -1,12 +1,18 @@
 import { useSelector } from "react-redux";
 import "./index.css";
-import { AppScreen, selectActiveRoute, selectScreen } from "./redux/mainSlice";
+import {
+    AppScreen,
+    selectActiveRoute,
+    selectIsReporting,
+    selectScreen
+} from "./redux/mainSlice";
 import { MapScreen } from "./screens/MapScreen";
 import { SelectDestinationScreen } from "./screens/SelectDestinationScreen";
 
 export const App = () => {
     const screen = useSelector(selectScreen);
     const activeRoute = useSelector(selectActiveRoute);
+    const isReporting = useSelector(selectIsReporting);
 
     return (
         <div className="main">
@@ -23,7 +29,9 @@ export const App = () => {
                     <div className="screen"></div>
                 )}
 
-                {activeRoute ? (
+                {isReporting ? (
+                    <div className="bottom-display display-no-route">Select a Path</div>
+                ) : activeRoute ? (
                     <div className="bottom-display">
                         <div className="time-left-display">12 min</div>
                         <div className="time-display">12:22 PM</div>

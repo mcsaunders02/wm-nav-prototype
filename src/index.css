@@ -300,5 +300,38 @@ body {
 
 .map {
     width: 400px;
-    height: 640px;   
+    height: 640px;
+}
+
+.report-button-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: end;
+    align-items: end;
+}
+
+.report-button {
+    width: 50px;
+    height: 50px;
+    border-radius: 25px;
+    margin-right: 10px;
+    margin-bottom: 10px;
+
+    background-color: #852221;
+    cursor: pointer;
+
+    color: white;
+    font-size: 36px;
+}
+
+.report-button:hover {
+    background-color: #9c1f1d;
+}
+
+.report-button:active {
+    background-color: #b91c1a;
+}
+
+.special-cursor {
+    cursor: url("./cone.png"), url("./cone.png"), auto;
 }

@@ -1,19 +1,60 @@
 import { useDispatch, useSelector } from "react-redux";
 import {
+    addPosition,
     AppScreen,
+    popPosition,
     selectActiveRoute,
+    selectIsReporting,
+    selectPositions,
     setActiveRoute,
+    setIsReporting,
     setScreen
 } from "../redux/mainSlice";
+import classNames from "classnames";
+import { useEffect, useRef } from "react";
 
 // This screen shows the map
 export const MapScreen = () => {
     const dispatch = useDispatch();
 
     const activeRoute = useSelector(selectActiveRoute);
+    const isReporting = useSelector(selectIsReporting);
+    const positions = useSelector(selectPositions);
+
+    // This is needed to get the position of the map
+    const ref = useRef();
+
+    useEffect(() => {
+        const listener = (event) => {
+            if (isReporting) {
+                // Find the x/y coords relative to the map
+                const clientRect = ref.current!.getClientRects()[0];
+
+                const x = event.clientX - clientRect.x;
+                const y = event.clientY - clientRect.y;
+
+                console.log(x, y);
+
+                if (x >= 0 && y >= 0 && (x <= 340 || y <= 420)) {
+                    dispatch(addPosition([x, y]));
+                    dispatch(setIsReporting(false));
+                }
+            }
+        };
+
+        document.addEventListener("click", listener);
+
+        return () => document.removeEventListener("click", listener);
+    }, [isReporting, dispatch]);
 
     return (
-        <div className="screen map-screen">
+        <div
+            className={classNames(
+                "screen",
+                "map-screen",
+                isReporting ? "special-cursor" : ""
+            )}
+        >
             {/* This actually serves as a button, so you click on it and get taken to the new page */}
             <div className="one-container">
                 <div
@@ -42,8 +83,35 @@ export const MapScreen = () => {
                 <span style={{ height: "60px" }}></span>
             )}
 
-            <div className="map">
-                <img width="400px" height="480px" src="./mymap.png" alt="A map containing paths"></img>
+            <div className="map one-container" ref={ref}>
+                <img
+                    width="400px"
+                    height="480px"
+                    src="./mymap.png"
+                    alt="A map containing paths"
+                ></img>
+
+                {isReporting || (
+                    <div className="report-button-container">
+                        <button
+                            className="report-button"
+                            onClick={() => {
+                                dispatch(setIsReporting(true));
+                            }}
+                        >
+                            !
+                        </button>
+                    </div>
+                )}
+
+                {positions.map((pos, idx) => (
+                    <img
+                        key={idx}
+                        src="./cone.png"
+                        style={{ position: "relative", top: pos[1], left: pos[0] }}
+                        alt="traffic cone"
+                    ></img>
+                ))}
             </div>
         </div>
     );
