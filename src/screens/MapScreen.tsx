@@ -33,11 +33,11 @@ export const MapScreen = () => {
                 const x = event.clientX - clientRect.x;
                 const y = event.clientY - clientRect.y;
 
-                console.log(x, y);
-
-                if (x >= 0 && y >= 0 && (x <= 340 || y <= 420)) {
+                // Magic numbers are for the position of the report button
+                if (x >= 0 && y >= 0 && (x <= 320 || y <= 400)) {
                     dispatch(addPosition([x, y]));
                     dispatch(setIsReporting(false));
+                    dispatch(setScreen(AppScreen.ReportBlockage));
                 }
             }
         };
@@ -106,6 +106,11 @@ export const MapScreen = () => {
 
                 {positions.map((pos, idx) => (
                     <img
+                        className="cone"
+                        onClick={() => {
+                            if (!isReporting)
+                                dispatch(setScreen(AppScreen.HandleBlockage));
+                        }}
                         key={idx}
                         src="./cone.png"
                         style={{ position: "relative", top: pos[1], left: pos[0] }}

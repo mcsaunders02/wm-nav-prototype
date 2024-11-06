@@ -8,6 +8,7 @@ import {
 } from "./redux/mainSlice";
 import { MapScreen } from "./screens/MapScreen";
 import { SelectDestinationScreen } from "./screens/SelectDestinationScreen";
+import { ReportBlockageScreen } from "./screens/ReportBlockageScreen";
 
 export const App = () => {
     const screen = useSelector(selectScreen);
@@ -25,6 +26,8 @@ export const App = () => {
                     <MapScreen />
                 ) : screen === AppScreen.SelectDestination ? (
                     <SelectDestinationScreen />
+                ) : screen === AppScreen.ReportBlockage ? (
+                    <ReportBlockageScreen />
                 ) : (
                     <div className="screen"></div>
                 )}
