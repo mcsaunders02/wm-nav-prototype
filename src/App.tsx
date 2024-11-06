@@ -2,6 +2,7 @@ import { useSelector } from "react-redux";
 import "./index.css";
 import { AppScreen, selectScreen } from "./redux/mainSlice";
 import { MapScreen } from "./screens/MapScreen";
+import { SelectDestinationScreen } from "./screens/SelectDestinationScreen";
 
 export const App = () => {
     const screen = useSelector(selectScreen);
@@ -15,6 +16,8 @@ export const App = () => {
 
                 {screen === AppScreen.Map ? (
                     <MapScreen />
+                ) : screen === AppScreen.SelectDestination ? (
+                    <SelectDestinationScreen />
                 ) : (
                     <div className="screen"></div>
                 )}
