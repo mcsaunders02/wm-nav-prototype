@@ -1,13 +1,22 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { AppScreen, setScreen } from "../redux/mainSlice";
 
 // Helper component for these text inputs
-const SelectDest = ({ text, onSubmit }: { text: string; onSubmit: () => void }) => {
+// onSubmit lets you do something with the text value as a parameter
+const SelectDest = ({
+    text,
+    onSubmit
+}: {
+    text: string;
+    onSubmit: (text: string) => void;
+}) => {
+    const [inputText, setInputText] = useState("");
+
     useEffect(() => {
         const listener = (event: KeyboardEvent) => {
             if (event.key === "Enter") {
-                onSubmit();
+                onSubmit(inputText);
             }
         };
 
@@ -16,7 +25,7 @@ const SelectDest = ({ text, onSubmit }: { text: string; onSubmit: () => void }) 
         element.addEventListener("keydown", listener);
 
         return () => element.removeEventListener("keydown", listener);
-    }, [onSubmit]);
+    }, [onSubmit, text, inputText]);
 
     return (
         <div className="one-container">
@@ -24,7 +33,9 @@ const SelectDest = ({ text, onSubmit }: { text: string; onSubmit: () => void }) 
                 id={`${text}-input`}
                 className="select-dest-input"
                 placeholder={text}
-                onSubmit={onSubmit}
+                onSubmit={() => onSubmit(inputText)}
+                value={inputText}
+                onChange={(event) => setInputText(event.target.value)}
             ></input>
             <img className="search-icon" src="./search.svg" alt="Search"></img>
         </div>
@@ -39,10 +50,14 @@ export const SelectDestinationScreen = () => {
         <div className="screen select-dest-screen">
             <SelectDest
                 text="Select Destination"
-                onSubmit={() => dispatch(setScreen(AppScreen.Map))}
+                onSubmit={(text) => {
+                    if (text.trim() !== "") {
+                        dispatch(setScreen(AppScreen.Map));
+                    }
+                }}
             />
 
-            <SelectDest text="Current Location" onSubmit={() => {}} />
+            <SelectDest text="Current Location" onSubmit={(text) => {}} />
         </div>
     );
 };
