@@ -205,3 +205,81 @@ body {
 .select-dest-input:focus {
     background-color: #dedede;
 }
+
+.search-select-container {
+    background-color: #f3edf7;
+
+    width: 360px;
+    height: 200px;
+
+    border-radius: 5px;
+    box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.3), 0px 2px 6px 2px rgba(0, 0, 0, 0.15);
+
+    display: grid;
+    grid-template-rows: 25% 25% 25% 25%;
+}
+
+.search-container-full {
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+}
+
+.search-select {
+    font-family: "Roboto";
+    font-size: 16px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding-left: 15px;
+    cursor: pointer;
+}
+
+.search-select:hover {
+    background-color: #e8e3ec;
+}
+
+.search-select:active {
+    background-color: #d7d3db;
+}
+
+.search-select-current {
+    background-color: #ff7f00;
+}
+
+.search-select-current:hover {
+    background-color: #ff9100;
+}
+
+.search-select-current:active {
+    background-color: #ffa600;
+}
+
+.select-dest-button {
+    width: 360px;
+    height: 60px;
+    background-color: #cacaca;
+    border-radius: 30px;
+
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+
+    font-family: "Roboto";
+    color: #49454f;
+    font-size: 18px;
+
+    cursor: pointer;
+    user-select: none;
+}
+
+.select-dest-button:hover {
+    background-color: #d4d4d4;
+}
+
+.select-dest-button:active {
+    background-color: #dedede;
+}
+

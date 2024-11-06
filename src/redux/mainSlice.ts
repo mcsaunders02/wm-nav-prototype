@@ -9,11 +9,13 @@ export enum AppScreen {
 }
 
 export type AppState = {
-    screen: AppScreen;
-}
+    screen: AppScreen; // Current screen
+    activeRoute: boolean; // Is there an active route?
+};
 
 const initialState: AppState = {
-    screen: AppScreen.Map
+    screen: AppScreen.Map,
+    activeRoute: true
 };
 
 export const mainSlice = createSlice({
@@ -22,13 +24,20 @@ export const mainSlice = createSlice({
     reducers: {
         setScreen(state: AppState, action: PayloadAction<AppScreen>) {
             state.screen = action.payload;
+        },
+
+        setActiveRoute(state: AppState, action: PayloadAction<boolean>) {
+            state.activeRoute = action.payload;
         }
     }
 });
 
-export const { setScreen } = mainSlice.actions;
+export const { setActiveRoute, setScreen } = mainSlice.actions;
 
 export default mainSlice.reducer;
 
 // Select the current screen
 export const selectScreen = (state: AppState): AppScreen => state.screen;
+
+// Selects if there is an active route
+export const selectActiveRoute = (state: AppState): boolean => state.activeRoute;

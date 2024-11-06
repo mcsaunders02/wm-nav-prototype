@@ -1,11 +1,12 @@
 import { useSelector } from "react-redux";
 import "./index.css";
-import { AppScreen, selectScreen } from "./redux/mainSlice";
+import { AppScreen, selectActiveRoute, selectScreen } from "./redux/mainSlice";
 import { MapScreen } from "./screens/MapScreen";
 import { SelectDestinationScreen } from "./screens/SelectDestinationScreen";
 
 export const App = () => {
     const screen = useSelector(selectScreen);
+    const activeRoute = useSelector(selectActiveRoute);
 
     return (
         <div className="main">

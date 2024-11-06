@@ -1,13 +1,16 @@
-import { useDispatch } from "react-redux";
-import { AppScreen, setScreen } from "../redux/mainSlice";
-import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import {
+    AppScreen,
+    selectActiveRoute,
+    setActiveRoute,
+    setScreen
+} from "../redux/mainSlice";
 
 // This screen shows the map
 export const MapScreen = () => {
     const dispatch = useDispatch();
 
-    // Is there currently a route in progress?
-    const [hasRoute, setHasRoute] = useState(true);
+    const activeRoute = useSelector(selectActiveRoute);
 
     return (
         <div className="screen map-screen">
@@ -22,13 +25,18 @@ export const MapScreen = () => {
                 <img className="search-icon" src="./search.svg" alt="Search"></img>
             </div>
 
-            {hasRoute ? (
+            {activeRoute ? (
                 <div className="next-direction-bar">
                     <img src="./leftarrow.svg" alt="Left Arrow"></img>
 
                     <div className="next-direction">200 ft at Landrum Dr</div>
 
-                    <div className="exit-route-button" onClick={() => setHasRoute(false)}>Exit</div>
+                    <div
+                        className="exit-route-button"
+                        onClick={() => dispatch(setActiveRoute(false))}
+                    >
+                        Exit
+                    </div>
                 </div>
             ) : (
                 <span style={{ height: "60px" }}></span>
