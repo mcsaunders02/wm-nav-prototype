@@ -41,6 +41,10 @@ export const MapScreen = () => {
             ) : (
                 <span style={{ height: "60px" }}></span>
             )}
+
+            <div className="map">
+                <img width="400px" height="480px" src="./mymap.png" alt="A map containing paths"></img>
+            </div>
         </div>
     );
 };

@@ -297,3 +297,8 @@ body {
 
     user-select: none;
 }
+
+.map {
+    width: 400px;
+    height: 640px;   
+}
