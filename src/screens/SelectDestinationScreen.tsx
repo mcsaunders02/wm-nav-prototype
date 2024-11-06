@@ -6,10 +6,12 @@ import { AppScreen, setScreen } from "../redux/mainSlice";
 // onSubmit lets you do something with the text value as a parameter
 const SelectDest = ({
     text,
-    onSubmit
+    onSubmit = (_) => {},
+    autofocus = false
 }: {
     text: string;
-    onSubmit: (text: string) => void;
+    onSubmit?: (text: string) => void;
+    autofocus?: boolean;
 }) => {
     const [inputText, setInputText] = useState("");
 
@@ -36,6 +38,7 @@ const SelectDest = ({
                 onSubmit={() => onSubmit(inputText)}
                 value={inputText}
                 onChange={(event) => setInputText(event.target.value)}
+                autoFocus={autofocus}
             ></input>
             <img className="search-icon" src="./search.svg" alt="Search"></img>
         </div>
@@ -55,9 +58,10 @@ export const SelectDestinationScreen = () => {
                         dispatch(setScreen(AppScreen.Map));
                     }
                 }}
+                autofocus={true}
             />
 
-            <SelectDest text="Current Location" onSubmit={(text) => {}} />
+            <SelectDest text="Current Location" />
         </div>
     );
 };
