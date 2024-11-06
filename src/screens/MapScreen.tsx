@@ -23,10 +23,10 @@ export const MapScreen = () => {
     const positions = useSelector(selectPositions);
 
     // This is needed to get the position of the map
-    const ref = useRef();
+    const ref = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
-        const listener = (event) => {
+        const listener = (event: MouseEvent) => {
             if (isReporting) {
                 // Find the x/y coords relative to the map
                 const clientRect = ref.current!.getClientRects()[0];
