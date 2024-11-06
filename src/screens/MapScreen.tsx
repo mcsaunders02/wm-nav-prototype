@@ -6,6 +6,7 @@ import {
     selectActiveRoute,
     selectIsReporting,
     selectPositions,
+    setActivePos,
     setActiveRoute,
     setIsReporting,
     setScreen
@@ -108,8 +109,10 @@ export const MapScreen = () => {
                     <img
                         className="cone"
                         onClick={() => {
-                            if (!isReporting)
+                            if (!isReporting) {
+                                dispatch(setActivePos(pos));
                                 dispatch(setScreen(AppScreen.HandleBlockage));
+                            }
                         }}
                         key={idx}
                         src="./cone.png"

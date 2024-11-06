@@ -13,13 +13,15 @@ export type AppState = {
     activeRoute: boolean; // Is there an active route?
     isReporting: boolean; // Is the user reporting a path?
     positions: number[][]; // List of points of blockages
+    activePos: number[]; // Active position
 };
 
 const initialState: AppState = {
     screen: AppScreen.Map,
     activeRoute: true,
     isReporting: false,
-    positions: []
+    positions: [],
+    activePos: []
 };
 
 export const mainSlice = createSlice({
@@ -44,11 +46,25 @@ export const mainSlice = createSlice({
 
         popPosition(state: AppState) {
             state.positions.pop();
+        },
+
+        setActivePos(state: AppState, action: PayloadAction<number[]>) {
+            state.activePos = action.payload;
+        },
+
+        removeActivePos(state: AppState) {
+            if (state.activePos.length === 2) {
+                state.positions = state.positions.filter(
+                    (pos) =>
+                        pos[0] !== state.activePos[0] || pos[1] !== state.activePos[1]
+                );
+            }
         }
     }
 });
 
-export const { addPosition, popPosition, setActiveRoute, setIsReporting, setScreen } = mainSlice.actions;
+export const { addPosition, popPosition, removeActivePos, setActivePos, setActiveRoute, setIsReporting, setScreen } =
+    mainSlice.actions;
 
 export default mainSlice.reducer;
 

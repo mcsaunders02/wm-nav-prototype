@@ -9,6 +9,7 @@ import {
 import { MapScreen } from "./screens/MapScreen";
 import { SelectDestinationScreen } from "./screens/SelectDestinationScreen";
 import { ReportBlockageScreen } from "./screens/ReportBlockageScreen";
+import { ViewBlockageScreen } from "./screens/ViewBlockageScreen";
 
 export const App = () => {
     const screen = useSelector(selectScreen);
@@ -29,11 +30,11 @@ export const App = () => {
                 ) : screen === AppScreen.ReportBlockage ? (
                     <ReportBlockageScreen />
                 ) : (
-                    <div className="screen"></div>
+                    <ViewBlockageScreen />
                 )}
 
                 {isReporting ? (
-                    <div className="bottom-display display-no-route">Select a Path</div>
+                    <div className="bottom-display display-no-route">Select a Point</div>
                 ) : activeRoute ? (
                     <div className="bottom-display">
                         <div className="time-left-display">12 min</div>

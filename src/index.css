@@ -461,3 +461,51 @@ body {
 .report-blockage-cancel:active {
     background-color: #ff7272;
 }
+
+.view-blockage-screen {
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    align-items: center;
+}
+
+.view-blockage-title {
+    font-family: "Roboto";
+    font-size: 24px;
+    text-align: start;
+    margin-top: 10px;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+.view-blockage-reason {
+    font-family: "Roboto";
+    color: #49454f;
+    font-size: 14px;
+    margin-left: 10px;
+    margin-bottom: 20px;
+    margin-top: 10px;
+}
+
+.view-blockage-button {
+    width: 150px;
+}
+
+.view-blockage-buttons {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    padding-left: 10px;
+    padding-right: 10px;
+    gap: 80px;
+}
+
+.view-blockage-change-reason {
+    padding: 10px;
+    height: 120px;
+    font-size: 16px;
+    margin-left: 10px;
+    margin-right: 10px;
+    box-sizing: border-box;
+    border-width: 0;
+}
