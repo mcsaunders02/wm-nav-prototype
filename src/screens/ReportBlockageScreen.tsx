@@ -15,13 +15,18 @@ export const ReportBlockageScreen = () => {
 
     const activePos = useSelector(selectActivePos)!;
 
-    const [theReason, setTheReason] = useState(activePos.reason);
-    const [otherReason, setOtherReason] = useState(
+    // The selected reason for the blockage
+    const [selectedReason, setSelectedReason] = useState(activePos.reason);
+
+    // The reason found in the "Other" textbox
+    const [otherReasonText, setOtherReasonText] = useState(
         activePos.reason === "Construction" || activePos.reason === "Flooding"
             ? ""
             : activePos.reason
     );
-    const [reasonText, setReasonText] = useState("Construction");
+
+    // The current selected reason to submit
+    const [reasonToSubmit, setReasonToSubmit] = useState("Construction");
 
     return (
         <div className="screen report-blockage-screen">
@@ -34,15 +39,15 @@ export const ReportBlockageScreen = () => {
                     <div
                         className={classNames(
                             "report-blockage-select",
-                            reason === theReason ? "report-blockage-select-active" : ""
+                            reason === selectedReason ? "report-blockage-select-active" : ""
                         )}
                         onClick={() => {
-                            setTheReason(reason);
+                            setSelectedReason(reason);
 
                             if (reason === "Other") {
-                                setReasonText(otherReason);
+                                setReasonToSubmit(otherReasonText);
                             } else {
-                                setReasonText(reason);
+                                setReasonToSubmit(reason);
                             }
                         }}
                         key={reason}
@@ -54,12 +59,12 @@ export const ReportBlockageScreen = () => {
                 <input
                     className="report-blockage-other"
                     placeholder="Enter Other Reason"
-                    value={otherReason}
+                    value={otherReasonText}
                     onChange={(event) => {
-                        setOtherReason(event.target.value);
+                        setOtherReasonText(event.target.value);
 
-                        if (theReason === "Other") {
-                            setReasonText(event.target.value);
+                        if (selectedReason === "Other") {
+                            setReasonToSubmit(event.target.value);
                         }
                     }}
                 ></input>
@@ -68,7 +73,7 @@ export const ReportBlockageScreen = () => {
                     <button
                         className="report-blockage-submit"
                         onClick={() => {
-                            dispatch(updateActivePosReason(reasonText));
+                            dispatch(updateActivePosReason(reasonToSubmit));
                             dispatch(setScreen(AppScreen.Map));
                         }}
                     >
