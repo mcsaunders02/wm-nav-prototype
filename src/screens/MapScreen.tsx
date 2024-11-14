@@ -100,18 +100,16 @@ export const MapScreen = () => {
                     alt="A map containing paths"
                 ></img>
 
-                {isReporting || (
-                    <div className="report-button-container">
-                        <button
-                            className="report-button"
-                            onClick={() => {
-                                dispatch(setIsReporting(true));
-                            }}
-                        >
-                            !
-                        </button>
-                    </div>
-                )}
+                <div className="report-button-container">
+                    <button
+                        className="report-button"
+                        onClick={() => {
+                            dispatch(setIsReporting(!isReporting));
+                        }}
+                    >
+                        {isReporting ? "X" : "!"}
+                    </button>
+                </div>
 
                 {positions.map((pos, idx) => (
                     <img
