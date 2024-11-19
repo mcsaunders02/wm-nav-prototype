@@ -65,6 +65,7 @@ body {
     border-radius: 60px;
     padding: 30px;
     box-sizing: border-box;
+    user-select: none;
 }
 
 .time-left-display {
@@ -308,6 +309,7 @@ body {
     flex-direction: row;
     justify-content: end;
     align-items: end;
+    pointer-events: none;
 }
 
 .report-button {
@@ -322,6 +324,8 @@ body {
 
     color: white;
     font-size: 36px;
+
+    pointer-events: all;
 }
 
 .report-button:hover {

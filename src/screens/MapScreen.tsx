@@ -6,11 +6,13 @@ import {
     AppScreen,
     selectActiveRoute,
     selectIsReporting,
+    selectPaths,
     selectPositions,
     setActivePos,
     setActiveRoute,
     setIsReporting,
-    setScreen
+    setScreen,
+    togglePathBlocked
 } from "../redux/mainSlice";
 import { nanoid } from "nanoid";
 
@@ -21,6 +23,7 @@ export const MapScreen = () => {
     const activeRoute = useSelector(selectActiveRoute);
     const isReporting = useSelector(selectIsReporting);
     const positions = useSelector(selectPositions);
+    const paths = useSelector(selectPaths);
 
     // This is needed to get the position of the map
     const ref = useRef<HTMLDivElement>(null);
@@ -100,16 +103,24 @@ export const MapScreen = () => {
                     alt="A map containing paths"
                 ></img>
 
-                <div className="report-button-container">
-                    <button
-                        className="report-button"
-                        onClick={() => {
-                            dispatch(setIsReporting(!isReporting));
-                        }}
-                    >
-                        {isReporting ? "X" : "!"}
-                    </button>
-                </div>
+                <svg width="400" height="480" style={{ userSelect: "none" }}>
+                    {paths.map((path, idx) => (
+                        <line
+                            key={idx}
+                            x1={path.startX}
+                            x2={path.endX}
+                            y1={path.startY}
+                            y2={path.endY}
+                            style={{
+                                stroke: path.blocked ? "#FF7F27" : "black",
+                                strokeWidth: "10",
+                                cursor: "pointer",
+                                pointerEvents: isReporting ? "none" : "all"
+                            }}
+                            onClick={() => dispatch(togglePathBlocked(path.id))}
+                        />
+                    ))}
+                </svg>
 
                 {positions.map((pos, idx) => (
                     <img
@@ -126,6 +137,30 @@ export const MapScreen = () => {
                         alt="traffic cone"
                     ></img>
                 ))}
+
+                <div className="report-button-container">
+                    <button
+                        className="report-button"
+                        onClick={() => {
+                            dispatch(setIsReporting(!isReporting));
+                        }}
+                    >
+                        {isReporting ? "X" : "!"}
+                    </button>
+                </div>
+
+                <img
+                    src="./pointer.png"
+                    width="40px"
+                    height="40px"
+                    style={{
+                        position: "relative",
+                        top: 210,
+                        left: 160,
+                        userSelect: "none"
+                    }}
+                    alt="pointer"
+                ></img>
             </div>
         </div>
     );
