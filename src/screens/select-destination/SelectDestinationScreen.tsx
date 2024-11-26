@@ -1,26 +1,38 @@
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import {
     AppScreen,
+    selectDestination,
+    selectStartLocation,
     setActiveRoute,
-    setScreen
+    setDestination,
+    setScreen,
+    setStartLocation
 } from "../../redux/mainSlice";
-import { SelectDestination } from "./SelectDestination";
-import { SelectStartLocation } from "./SelectStartLocation";
+import { SelectLocationInput } from "./SelectLocationInput";
 
 // This screen lets you select the destination
 export const SelectDestinationScreen = () => {
     const dispatch = useDispatch();
 
+    const destination = useSelector(selectDestination);
+    const startLocation = useSelector(selectStartLocation);
+
     return (
         <div className="screen select-dest-screen">
-            <SelectDestination
+            <SelectLocationInput
                 text="Select Destination"
                 locations={["Location 1", "Location 2", "Location 3", "Location 4"]}
+                otherLocation={startLocation}
+                updateState={(value) => dispatch(setDestination(value))}
+                isMain={true}
             />
 
-            <SelectStartLocation
+            <SelectLocationInput
                 text="Select Current Location"
                 locations={["Current Location", "Location 2", "Location 3", "Location 4"]}
+                otherLocation={destination}
+                updateState={(value) => dispatch(setStartLocation(value))}
+                isMain={false}
             />
 
             <button
