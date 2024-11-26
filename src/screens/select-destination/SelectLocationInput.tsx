@@ -44,7 +44,7 @@ export const SelectLocationInput = ({
         element.addEventListener("keydown", listener);
 
         return () => element.removeEventListener("keydown", listener);
-    }, [text, inputText, dispatch]);
+    }, [text, inputText, dispatch, isMain]);
 
     return (
         <div className="search-container-full">
