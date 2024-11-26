@@ -39,7 +39,9 @@ export const ReportBlockageScreen = () => {
                     <div
                         className={classNames(
                             "report-blockage-select",
-                            reason === selectedReason ? "report-blockage-select-active" : ""
+                            reason === selectedReason
+                                ? "report-blockage-select-active"
+                                : ""
                         )}
                         onClick={() => {
                             setSelectedReason(reason);
@@ -56,18 +58,20 @@ export const ReportBlockageScreen = () => {
                     </div>
                 ))}
 
-                <input
-                    className="report-blockage-other"
-                    placeholder="Enter Other Reason"
-                    value={otherReasonText}
-                    onChange={(event) => {
-                        setOtherReasonText(event.target.value);
+                { selectedReason === "Other" ?
+                    <input
+                        className="report-blockage-other"
+                        placeholder="Enter Other Reason"
+                        value={otherReasonText}
+                        onChange={(event) => {
+                            setOtherReasonText(event.target.value);
 
-                        if (selectedReason === "Other") {
                             setReasonToSubmit(event.target.value);
-                        }
-                    }}
-                ></input>
+                        }}
+                    ></input> : <span style={{
+                        height: "80px"
+                    }}></span>
+                }
 
                 <div className="report-blockage-buttons">
                     <button
