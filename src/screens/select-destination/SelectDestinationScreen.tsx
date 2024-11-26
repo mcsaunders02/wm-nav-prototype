@@ -38,8 +38,10 @@ export const SelectDestinationScreen = () => {
             <button
                 className="select-dest-button"
                 onClick={() => {
-                    dispatch(setScreen(AppScreen.Map));
-                    dispatch(setActiveRoute(true));
+                    if (destination.trim() !== "") {
+                        dispatch(setScreen(AppScreen.Map));
+                        dispatch(setActiveRoute(true));
+                    }
                 }}
             >
                 Confirm Destination

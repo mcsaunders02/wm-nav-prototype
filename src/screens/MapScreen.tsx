@@ -1,5 +1,6 @@
 import classNames from "classnames";
-import { useEffect, useRef } from "react";
+import { nanoid } from "nanoid";
+import { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
     addPosition,
@@ -10,11 +11,12 @@ import {
     selectPositions,
     setActivePos,
     setActiveRoute,
+    setDestination,
     setIsReporting,
     setScreen,
+    setStartLocation,
     togglePathBlocked
 } from "../redux/mainSlice";
-import { nanoid } from "nanoid";
 
 // This screen shows the map
 export const MapScreen = () => {
@@ -27,6 +29,9 @@ export const MapScreen = () => {
 
     // This is needed to get the position of the map
     const ref = useRef<HTMLDivElement>(null);
+
+    // Is it displaying the "Confirmed Route" text
+    const [showConfirmedRoute, setShowConfirmedRoute] = useState(activeRoute);
 
     useEffect(() => {
         const listener = (event: MouseEvent) => {
@@ -59,6 +64,14 @@ export const MapScreen = () => {
         return () => document.removeEventListener("click", listener);
     }, [isReporting, dispatch]);
 
+    useEffect(() => {
+        if (showConfirmedRoute) {
+            const timeout = setTimeout(() => setShowConfirmedRoute(false), 1250);
+
+            return () => clearTimeout(timeout);
+        }
+    }, [showConfirmedRoute]);
+
     return (
         <div
             className={classNames(
@@ -72,7 +85,14 @@ export const MapScreen = () => {
                 <div className="next-direction-bar">
                     <img src="./leftarrow.svg" alt="Left Arrow"></img>
 
-                    <div className="next-direction">200 ft at Landrum Dr</div>
+                    <div
+                        className={classNames(
+                            "next-direction",
+                            showConfirmedRoute ? "confirm-fade" : ""
+                        )}
+                    >
+                        {showConfirmedRoute ? "Confirmed Route" : "200 ft at Landrum Dr"}
+                    </div>
 
                     <div
                         className="exit-route-button"
@@ -87,6 +107,10 @@ export const MapScreen = () => {
                         className="map-destination-input"
                         onClick={() => {
                             dispatch(setScreen(AppScreen.SelectDestination));
+
+                            // Clear the destination/location
+                            dispatch(setDestination(""));
+                            dispatch(setStartLocation(""));
                         }}
                     >
                         Select Destination

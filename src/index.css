@@ -142,6 +142,21 @@ body {
     font-size: 20px;
 }
 
+@keyframes fade-out {
+    from {
+        opacity: 1;
+    }
+
+    to {
+        opacity: 0;
+    }
+}
+
+.confirm-fade {
+    animation-name: fade-out;
+    animation-duration: 1.5s;
+}
+
 .exit-route-button {
     width: 80px;
     height: 60px;

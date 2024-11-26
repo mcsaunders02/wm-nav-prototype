@@ -31,7 +31,7 @@ export const SelectLocationInput = ({
 
                 setIsOpen(false);
 
-                if (isMain) {
+                if (isMain && inputText.trim() !== "") {
                     // Go back to the map screen
                     dispatch(setScreen(AppScreen.Map));
                     dispatch(setActiveRoute(true));
