@@ -55,33 +55,44 @@ export type AppState = {
     startLocation: string; // Current starting location
 };
 
+// List of paths by default
+const paths = [
+    makePath(-5, 124, 73, 126),
+    makePath(73, 126, 44, 212),
+    makePath(44, 212, 77, 347),
+    makePath(77, 347, -5, 365),
+    makePath(77, 347, 172, 322),
+    makePath(172, 322, 169, 364),
+    makePath(169, 364, 155, 480),
+    makePath(169, 364, 385, 276),
+    makePath(385, 276, 410, 285),
+    makePath(385, 276, 301, 221),
+    makePath(301, 221, 400, 214),
+    makePath(301, 221, 183, 232),
+    makePath(183, 232, 172, 322),
+    makePath(183, 159, 245, 52),
+    makePath(245, 52, 338, 45),
+    makePath(338, 45, 420, 0),
+    makePath(59, 0, 73, 130, true),
+    makePath(183, 232, 183, 159, true),
+    makePath(189, 159, 73, 126, true)
+];
+
+// Scale factor for the map from the expected 480px
+const scaleFactor = 560 / 480;
+
 const initialState: AppState = {
     screen: AppScreen.Map,
     activeRoute: false,
     isReporting: false,
     positions: [],
     activePos: null,
-    paths: [
-        makePath(-5, 124, 73, 126),
-        makePath(73, 126, 44, 212),
-        makePath(44, 212, 77, 347),
-        makePath(77, 347, -5, 365),
-        makePath(77, 347, 172, 322),
-        makePath(172, 322, 169, 364),
-        makePath(169, 364, 155, 480),
-        makePath(169, 364, 385, 276),
-        makePath(385, 276, 410, 285),
-        makePath(385, 276, 301, 221),
-        makePath(301, 221, 400, 214),
-        makePath(301, 221, 183, 232),
-        makePath(183, 232, 172, 322),
-        makePath(183, 159, 245, 52),
-        makePath(245, 52, 338, 45),
-        makePath(338, 45, 420, 0),
-        makePath(59, 0, 73, 130, true),
-        makePath(183, 232, 183, 159, true),
-        makePath(189, 159, 73, 126, true)
-    ],
+    // I changed the height of the map, so I needed to scale up the height
+    paths: paths.map(path => ({
+        ...path,
+        startY: path.startY * scaleFactor,
+        endY: path.endY * scaleFactor
+    })),
     destination: "",
     startLocation: ""
 };

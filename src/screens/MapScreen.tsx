@@ -38,7 +38,7 @@ export const MapScreen = () => {
                 const y = event.clientY - clientRect.y;
 
                 // Magic numbers are for the position of the report button
-                if (x >= 0 && y >= 0 && (x <= 320 || y <= 400)) {
+                if (x >= 0 && y >= 0 && (x <= 320 || y <= 480)) {
                     const newPos = {
                         x,
                         y,
@@ -98,12 +98,12 @@ export const MapScreen = () => {
             <div className="map one-container" ref={ref}>
                 <img
                     width="400px"
-                    height="480px"
+                    height="560px"
                     src="./mymap.png"
                     alt="A map containing paths"
                 ></img>
 
-                <svg width="400" height="480" style={{ userSelect: "none" }}>
+                <svg width="400" height="560" style={{ userSelect: "none" }}>
                     {paths.map((path, idx) => (
                         <line
                             key={idx}
