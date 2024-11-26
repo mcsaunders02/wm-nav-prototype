@@ -57,7 +57,7 @@ export type AppState = {
 
 const initialState: AppState = {
     screen: AppScreen.Map,
-    activeRoute: true,
+    activeRoute: false,
     isReporting: false,
     positions: [],
     activePos: null,
