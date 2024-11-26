@@ -194,9 +194,8 @@ body {
     font-family: "Roboto";
     color: #49454f;
     font-size: 18px;
-
+    
     cursor: pointer;
-    user-select: none;
 }
 
 .select-dest-input:hover {

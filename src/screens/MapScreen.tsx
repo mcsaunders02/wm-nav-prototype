@@ -71,7 +71,9 @@ export const MapScreen = () => {
             <div className="one-container">
                 <div
                     className="map-destination-input"
-                    onClick={() => dispatch(setScreen(AppScreen.SelectDestination))}
+                    onClick={() => {
+                        dispatch(setScreen(AppScreen.SelectDestination));
+                    }}
                 >
                     Select Destination
                 </div>

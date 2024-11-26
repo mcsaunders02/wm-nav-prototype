@@ -7,7 +7,7 @@ import {
     selectScreen
 } from "./redux/mainSlice";
 import { MapScreen } from "./screens/MapScreen";
-import { SelectDestinationScreen } from "./screens/SelectDestinationScreen";
+import { SelectDestinationScreen } from "./screens/select-destination/SelectDestinationScreen";
 import { ReportBlockageScreen } from "./screens/ReportBlockageScreen";
 import { ViewBlockageScreen } from "./screens/ViewBlockageScreen";
 

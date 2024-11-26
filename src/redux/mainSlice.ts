@@ -187,3 +187,9 @@ export const selectActivePos = (state: AppState): Position => state.activePos!;
 
 // Selects all paths
 export const selectPaths = (state: AppState): Path[] => state.paths;
+
+// Selects the destination
+export const selectDestination = (state: AppState): string => state.destination;
+
+// Selects the start location
+export const selectStartLocation = (state: AppState): string => state.startLocation;
