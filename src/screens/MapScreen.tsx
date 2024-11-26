@@ -73,7 +73,7 @@ export const MapScreen = () => {
                     className="map-destination-input"
                     onClick={() => dispatch(setScreen(AppScreen.SelectDestination))}
                 >
-                    {activeRoute ? "towards Destination" : "Select Destination"}
+                    Select Destination
                 </div>
                 <img className="search-icon" src="./search.svg" alt="Search"></img>
             </div>
