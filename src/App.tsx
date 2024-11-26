@@ -42,7 +42,7 @@ export const App = () => {
                     </div>
                 ) : (
                     <div className="bottom-display display-no-route">
-                        No Route Selected
+                        
                     </div>
                 )}
             </div>
