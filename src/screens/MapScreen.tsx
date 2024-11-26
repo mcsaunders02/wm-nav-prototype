@@ -143,6 +143,10 @@ export const MapScreen = () => {
                 ))}
 
                 <div className="report-button-container">
+                    <div className="report-button-label">Report Blockage</div>
+                </div>
+
+                <div className="report-button-container">
                     <button
                         className="report-button"
                         onClick={() => {
