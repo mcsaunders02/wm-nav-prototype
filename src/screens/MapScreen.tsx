@@ -114,7 +114,7 @@ export const MapScreen = () => {
                             y1={path.startY}
                             y2={path.endY}
                             style={{
-                                stroke: path.blocked ? "#FF7F27" : "black",
+                                stroke: path.blocked ? "#FF7F27" : path.partOfPath ? "#afc5de" : "black",
                                 strokeWidth: "10",
                                 cursor: "pointer",
                                 pointerEvents: isReporting ? "none" : "all"

@@ -23,6 +23,7 @@ export type Path = {
     endX: number;
     endY: number;
     blocked: boolean;
+    partOfPath: boolean; // Is it part of the active path?
     id: string;
 };
 
@@ -31,13 +32,15 @@ export const makePath = (
     startX: number,
     startY: number,
     endX: number,
-    endY: number
+    endY: number,
+    partOfPath: boolean = false
 ): Path => ({
     startX,
     startY,
     endX,
     endY,
     blocked: false,
+    partOfPath,
     id: nanoid()
 });
 
@@ -59,7 +62,6 @@ const initialState: AppState = {
     positions: [],
     activePos: null,
     paths: [
-        makePath(59, 0, 73, 126),
         makePath(-5, 124, 73, 126),
         makePath(73, 126, 44, 212),
         makePath(44, 212, 77, 347),
@@ -73,11 +75,12 @@ const initialState: AppState = {
         makePath(301, 221, 400, 214),
         makePath(301, 221, 183, 232),
         makePath(183, 232, 172, 322),
-        makePath(183, 232, 183, 159),
-        makePath(183, 159, 73, 126),
         makePath(183, 159, 245, 52),
         makePath(245, 52, 338, 45),
-        makePath(338, 45, 420, 0)
+        makePath(338, 45, 420, 0),
+        makePath(59, 0, 73, 130, true),
+        makePath(183, 232, 183, 159, true),
+        makePath(189, 159, 73, 126, true)
     ],
     destination: "",
     startLocation: ""
