@@ -38,7 +38,7 @@ export const App = () => {
                 ) : activeRoute ? (
                     <div className="bottom-display">
                         <div className="time-left-display">12 min</div>
-                        <div className="time-display">12:22 PM</div>
+                        <div className="time-display">ETA: 12:22 PM</div>
                     </div>
                 ) : (
                     <div className="bottom-display display-no-route">
