@@ -68,18 +68,6 @@ export const MapScreen = () => {
             )}
         >
             {/* This actually serves as a button, so you click on it and get taken to the new page */}
-            <div className="one-container">
-                <div
-                    className="map-destination-input"
-                    onClick={() => {
-                        dispatch(setScreen(AppScreen.SelectDestination));
-                    }}
-                >
-                    Select Destination
-                </div>
-                <img className="search-icon" src="./search.svg" alt="Search"></img>
-            </div>
-
             {activeRoute ? (
                 <div className="next-direction-bar">
                     <img src="./leftarrow.svg" alt="Left Arrow"></img>
@@ -94,7 +82,17 @@ export const MapScreen = () => {
                     </div>
                 </div>
             ) : (
-                <span style={{ height: "80px" }}></span>
+                <div className="one-container">
+                    <div
+                        className="map-destination-input"
+                        onClick={() => {
+                            dispatch(setScreen(AppScreen.SelectDestination));
+                        }}
+                    >
+                        Select Destination
+                    </div>
+                    <img className="search-icon" src="./search.svg" alt="Search"></img>
+                </div>
             )}
 
             <div className="map one-container" ref={ref}>
@@ -114,7 +112,11 @@ export const MapScreen = () => {
                             y1={path.startY}
                             y2={path.endY}
                             style={{
-                                stroke: path.blocked ? "#FF7F27" : path.partOfPath ? "#afc5de" : "black",
+                                stroke: path.blocked
+                                    ? "#FF7F27"
+                                    : path.partOfPath
+                                    ? "#afc5de"
+                                    : "black",
                                 strokeWidth: "10",
                                 cursor: "pointer",
                                 pointerEvents: isReporting ? "none" : "all"
