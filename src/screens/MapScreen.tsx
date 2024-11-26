@@ -94,7 +94,7 @@ export const MapScreen = () => {
                     </div>
                 </div>
             ) : (
-                <span style={{ height: "60px" }}></span>
+                <span style={{ height: "80px" }}></span>
             )}
 
             <div className="map one-container" ref={ref}>
