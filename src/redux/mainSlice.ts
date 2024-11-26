@@ -48,6 +48,8 @@ export type AppState = {
     positions: Position[]; // List of points of blockages
     activePos: Position | null; // Active position
     paths: Path[]; // List of paths
+    destination: string; // Current destination
+    startLocation: string; // Current starting location
 };
 
 const initialState: AppState = {
@@ -76,7 +78,9 @@ const initialState: AppState = {
         makePath(183, 159, 245, 52),
         makePath(245, 52, 338, 45),
         makePath(338, 45, 420, 0)
-    ]
+    ],
+    destination: "",
+    startLocation: ""
 };
 
 export const mainSlice = createSlice({
@@ -136,6 +140,16 @@ export const mainSlice = createSlice({
                       }
                     : path
             );
+        },
+
+        // Updates the destination
+        setDestination(state: AppState, action: PayloadAction<string>) {
+            state.destination = action.payload;
+        },
+
+        // Updates the start location
+        setStartLocation(state: AppState, action: PayloadAction<string>) {
+            state.startLocation = action.payload;
         }
     }
 });
@@ -146,8 +160,10 @@ export const {
     removeActivePos,
     setActivePos,
     setActiveRoute,
+    setDestination,
     setIsReporting,
     setScreen,
+    setStartLocation,
     togglePathBlocked,
     updateActivePosReason
 } = mainSlice.actions;
