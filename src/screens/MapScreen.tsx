@@ -7,12 +7,14 @@ import {
     AppScreen,
     selectActiveRoute,
     selectIsReporting,
+    selectJustSelectedRoute,
     selectPaths,
     selectPositions,
     setActivePos,
     setActiveRoute,
     setDestination,
     setIsReporting,
+    setJustSelectedRoute,
     setScreen,
     setStartLocation,
     togglePathBlocked
@@ -23,6 +25,7 @@ export const MapScreen = () => {
     const dispatch = useDispatch();
 
     const activeRoute = useSelector(selectActiveRoute);
+    const justSelectedRoute = useSelector(selectJustSelectedRoute);
     const isReporting = useSelector(selectIsReporting);
     const positions = useSelector(selectPositions);
     const paths = useSelector(selectPaths);
@@ -31,7 +34,7 @@ export const MapScreen = () => {
     const ref = useRef<HTMLDivElement>(null);
 
     // Is it displaying the "Confirmed Route" text
-    const [showConfirmedRoute, setShowConfirmedRoute] = useState(activeRoute);
+    const [showConfirmedRoute, setShowConfirmedRoute] = useState(justSelectedRoute);
 
     useEffect(() => {
         const listener = (event: MouseEvent) => {
@@ -66,7 +69,10 @@ export const MapScreen = () => {
 
     useEffect(() => {
         if (showConfirmedRoute) {
-            const timeout = setTimeout(() => setShowConfirmedRoute(false), 1250);
+            const timeout = setTimeout(() => {
+                setShowConfirmedRoute(false);
+                dispatch(setJustSelectedRoute(false));
+            }, 1250);
 
             return () => clearTimeout(timeout);
         }

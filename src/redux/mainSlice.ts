@@ -53,6 +53,7 @@ export type AppState = {
     paths: Path[]; // List of paths
     destination: string; // Current destination
     startLocation: string; // Current starting location
+    justSelectedRoute: boolean; // Did the user just select a route?
 };
 
 // List of paths by default
@@ -94,7 +95,8 @@ const initialState: AppState = {
         endY: path.endY * scaleFactor
     })),
     destination: "",
-    startLocation: ""
+    startLocation: "",
+    justSelectedRoute: false
 };
 
 export const mainSlice = createSlice({
@@ -164,6 +166,10 @@ export const mainSlice = createSlice({
         // Updates the start location
         setStartLocation(state: AppState, action: PayloadAction<string>) {
             state.startLocation = action.payload;
+        },
+
+        setJustSelectedRoute(state: AppState, action: PayloadAction<boolean>) {
+            state.justSelectedRoute = action.payload
         }
     }
 });
@@ -176,6 +182,7 @@ export const {
     setActiveRoute,
     setDestination,
     setIsReporting,
+    setJustSelectedRoute,
     setScreen,
     setStartLocation,
     togglePathBlocked,
@@ -207,3 +214,5 @@ export const selectDestination = (state: AppState): string => state.destination;
 
 // Selects the start location
 export const selectStartLocation = (state: AppState): string => state.startLocation;
+
+export const selectJustSelectedRoute = (state: AppState): boolean => state.justSelectedRoute

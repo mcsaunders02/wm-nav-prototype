@@ -5,6 +5,7 @@ import {
     selectStartLocation,
     setActiveRoute,
     setDestination,
+    setJustSelectedRoute,
     setScreen,
     setStartLocation
 } from "../../redux/mainSlice";
@@ -41,6 +42,7 @@ export const SelectDestinationScreen = () => {
                     if (destination.trim() !== "") {
                         dispatch(setScreen(AppScreen.Map));
                         dispatch(setActiveRoute(true));
+                        dispatch(setJustSelectedRoute(true));
                     }
                 }}
             >
